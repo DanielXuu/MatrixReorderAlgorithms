@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>Matrix Reordering Interactive Visualization</title>
+<meta charset="utf-8">
+
+<link type="text/css" href="css/style.css" rel="stylesheet" />
+
+<script src="./src/lib/d3.v3.js"></script>
+<script src="./src/lib/science.v1.js"></script>
+<script src="./src/lib/tiny-queue.js"></script>
+<script src="./src/lib/reorder.v1.js"></script>
+<script src="./src/lib/Matrix_helper.js"></script>
+<script src="./src/lib/Vector.js"></script>
+<script src="./src/lib/numeric-1.2.6.js"></script>
+</head>
+<body>
+<script src="./src/matrix.js"></script>
+
+<script src="./src/bipolar.js"></script>
+<script src="./src/spectral.js"></script>
+<script src="./src/rank2ellipse.js"></script>
+<script src="./src/mds.js"></script>
+<script src="./src/mrm.js"></script>
+
+
+<header>
+  <a rel="author">Zhenqiang (Daniel) Xu</a>
+</header>
+
+<h1><i>Matrix Reordering Interactive Visualization</i></h1>
+
+
+<div id="test">
+  <h2>Test Matrix</h2>
+  <aside>
+    <p>Reorder Algorithms: </p>
+    <select id="order1">
+      <option value="sequence">Sequence</option>
+      <option value="bipolar">Bipolarization</option>
+      <option value="spectral">Spectral</option>
+      <option value="rank2ellipse">Rank-two Ellipse</option>
+      <option value="mds">MDS</option>
+      <option value="mrm">Mean Row Moments</option>
+      <option value="barycenter">Barycenter</option>
+      <option value="rcm">Reverse Cuthill-McKee</option>
+      <option value="test">*Test</option>
+    </select>
+  </aside>
+
+  <script>
+      var margin = {top: 10, right: 0, bottom: 10, left: 80},
+          width = 750,
+          height = 750;
+
+      var x = d3.scale.ordinal().rangeBands([0, width]),
+          z = d3.scale.linear().domain([0, 4]).clamp(true),
+          c = d3.scale.category10().domain(d3.range(10));
+
+      var svg = d3.select("#test").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .style("margin-left", -margin.left + "px")
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      d3.json("data/test.json",loadJson1);
+  </script>
+</div>
+
+
+<div id="brain">
+  <h2>Brain (187/0.03/5.51)</h2>
+  <aside>
+    <p>Reorder Algorithms: </p>
+    <select id="order2">
+      <option value="sequence">Sequence</option>
+      <option value="bipolar">Bipolarization</option>
+      <option value="spectral">Spectral</option>
+      <option value="rank2ellipse">Rank-two Ellipse</option>
+      <option value="mds">MDS</option>
+      <option value="mrm">Mean Row Moments</option>
+      <option value="barycenter">Barycenter</option>
+      <option value="rcm">Reverse Cuthill-McKee</option>
+      <option value="test">*Test</option>
+    </select>
+  </aside>
+
+  <script>
+      var margin = {top: 20, right: 0, bottom: 10, left: 80},
+          width = 750,
+          height = 750;
+
+      var x2 = d3.scale.ordinal().rangeBands([0, width]),
+          z2 = d3.scale.linear().domain([0, 4]).clamp(true),
+          c2 = d3.scale.category10().domain(d3.range(10));
+
+      var svg2 = d3.select("#brain").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .style("margin-left", -margin.left + "px")
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      d3.json("data/brain.json",loadJson2);
+  </script>
+</div>
+
+<div id="petit">
+  <h2>Petit GD96c (65/0.06/3.85)</h2>
+  <aside>
+    <p>Reorder Algorithms: </p>
+    <select id="order4">
+      <option value="sequence">Sequence</option>
+      <option value="bipolar">Bipolarization</option>
+      <option value="spectral">Spectral</option>
+      <option value="rank2ellipse">Rank-two Ellipse</option>
+      <option value="mds">MDS</option>
+      <option value="mrm">Mean Row Moments</option>
+      <option value="barycenter">Barycenter</option>
+      <option value="rcm">Reverse Cuthill-McKee</option>
+      <option value="test">*Test</option>
+    </select>
+  </aside>
+
+  <script>
+      var margin = {top: 20, right: 0, bottom: 10, left: 80},
+          width = 750,
+          height = 750;
+
+      var x4 = d3.scale.ordinal().rangeBands([0, width]),
+          z4 = d3.scale.linear().domain([0, 4]).clamp(true),
+          c4 = d3.scale.category10().domain(d3.range(10));
+
+      var svg4 = d3.select("#petit").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .style("margin-left", -margin.left + "px")
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      d3.json("data/petit.json",loadJson4);
+  </script>
+</div>
+
+<div id="watts">
+  <h2>Watts Strogatz 3 (100/0.04/3.98)</h2>
+  <aside>
+    <p>Reorder Algorithms: </p>
+    <select id="order5">
+      <option value="sequence">Sequence</option>
+      <option value="bipolar">Bipolarization</option>
+      <option value="spectral">Spectral</option>
+      <option value="rank2ellipse">Rank-two Ellipse</option>
+      <option value="mds">MDS</option>
+      <option value="mrm">Mean Row Moments</option>
+      <option value="barycenter">Barycenter</option>
+      <option value="rcm">Reverse Cuthill-McKee</option>
+      <option value="test">*Test</option>
+    </select>
+  </aside>
+
+  <script>
+      var margin = {top: 20, right: 0, bottom: 10, left: 80},
+          width = 750,
+          height = 750;
+
+      var x5 = d3.scale.ordinal().rangeBands([0, width]),
+          z5 = d3.scale.linear().domain([0, 4]).clamp(true),
+          c5 = d3.scale.category10().domain(d3.range(10));
+
+      var svg5 = d3.select("#watts").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .style("margin-left", -margin.left + "px")
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      d3.json("data/watts.json",loadJson5);
+  </script>
+</div>
+
+<div id="cluster">
+  <h2>Clustered (70/0.12/8.77)</h2>
+  <aside>
+    <p>Reorder Algorithms: </p>
+    <select id="order3">
+      <option value="sequence">Sequence</option>
+      <option value="bipolar">Bipolarization</option>
+      <option value="spectral">Spectral</option>
+      <option value="rank2ellipse">Rank-two Ellipse</option>
+      <option value="mds">MDS</option>
+      <option value="mrm">Mean Row Moments</option>
+      <option value="barycenter">Barycenter</option>
+      <option value="rcm">Reverse Cuthill-McKee</option>
+      <option value="test">*Test</option>
+    </select>
+  </aside>
+
+  <script>
+      var margin = {top: 20, right: 0, bottom: 10, left: 80},
+          width = 750,
+          height = 750;
+
+      var x3 = d3.scale.ordinal().rangeBands([0, width]),
+          z3 = d3.scale.linear().domain([0, 4]).clamp(true),
+          c3 = d3.scale.category10().domain(d3.range(10));
+
+      var svg3 = d3.select("#cluster").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .style("margin-left", -margin.left + "px")
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      d3.json("data/cluster.json",loadJson3);
+  </script>
+</div>
+
+<p>Reference Source:
+  <cite>
+    <a href="https://github.com/jdfekete/reorder.js/wiki/Introduction">Reorder.js</a>,
+    <a href="http://cis.jhu.edu/~shanest/js/math/docs/overview-summary.html">MathWorx</a>,
+    <a href="http://www.numericjs.com/">Numeric JavaScript library</a>
+</cite>
+</p>
+
+
+
+</body>
+</html>
+
